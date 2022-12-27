@@ -17,6 +17,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- Toastr -->
+  <link rel="stylesheet" href="<?= base_url(''); ?>/plugins/toastr/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url(''); ?>/dist/css/adminlte.min.css">
 </head>
@@ -68,8 +76,72 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?= base_url(''); ?>/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap 4 -->
   <script src="<?= base_url(''); ?>/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- DataTables  & Plugins -->
+  <script src="<?= base_url(''); ?>/plugins/datatables/jquery.dataTables.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/jszip/jszip.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/pdfmake/pdfmake.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/pdfmake/vfs_fonts.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+  <script src="<?= base_url(''); ?>/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+  <!-- SweetAlert2 -->
+  <script src="<?= base_url(''); ?>/plugins/sweetalert.js"></script>
+  <!-- Toastr -->
+  <script src="<?= base_url(''); ?>/plugins/toastr/toastr.min.js"></script>
   <!-- AdminLTE App -->
   <script src="<?= base_url(''); ?>/dist/js/adminlte.min.js"></script>
+  <?= $this->renderSection('script'); ?>
+
+  <script>
+  toastr.options = {
+    "closeButton": false,
+    "debug": false,
+    "newestOnTop": true,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "showDuration": "600",
+    "hideDuration": "1000",
+    "timeOut": "5000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "linear",
+    "showMethod": "fadeIn",
+    "hideMethod": "fadeOut"
+  }
+  </script>
+
+  <?php ?>
+
+  <?php
+  if (session()->getFlashdata('dataMessage')) {
+    foreach (session()->getFlashdata('dataMessage') as $item) {
+      echo '<script>toastr["' .
+        session()->getFlashdata('type-status') . '"]("' . $item . '")</script>';
+    }
+  }
+  if (session()->getFlashdata('message')) {
+    echo '<script>toastr["' .
+      session()->getFlashdata('type-status') . '"]("' . session()->getFlashdata('message') . '")</script>';
+  }
+  ?>
+
+  <script>
+  $(function() {
+    $("#table").DataTable({
+      "responsive": true,
+      "lengthChange": false,
+      "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#table_wrapper .col-md-6:eq(0)');
+  });
+  </script>
+
 </body>
 
 </html>

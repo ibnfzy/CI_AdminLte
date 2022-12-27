@@ -8,8 +8,6 @@ class AdminModel extends Model
 {
     protected $table            = 'admin';
     protected $primaryKey       = 'id_admin';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
     protected $allowedFields    = [
         'username',
         'fullname',
